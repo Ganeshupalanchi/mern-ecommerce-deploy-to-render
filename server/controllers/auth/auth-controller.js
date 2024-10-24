@@ -56,22 +56,33 @@ const loginUser = async (req, res) => {
       process.env.SECRET_KEY,
       { expiresIn: "1h" }
     );
-    res
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "lax",
-      })
-      .json({
-        success: true,
-        message: "Logged in successfully.",
-        user: {
-          email: isUserExist.email,
-          role: isUserExist.role,
-          userId: isUserExist.id,
-          userName: isUserExist.userName,
-        },
-      });
+    // res
+    //   .cookie("token", token, {
+    //     httpOnly: true,
+    //     secure: true,
+    //     sameSite: "lax",
+    //   })
+    //   .json({
+    //     success: true,
+    //     message: "Logged in successfully.",
+    //     user: {
+    //       email: isUserExist.email,
+    //       role: isUserExist.role,
+    //       userId: isUserExist.id,
+    //       userName: isUserExist.userName,
+    //     },
+    //   });
+    res.status(200).json({
+      success: true,
+      message: "Logged in successfully.",
+      token,
+      user: {
+        email: isUserExist.email,
+        role: isUserExist.role,
+        userId: isUserExist.id,
+        userName: isUserExist.userName,
+      },
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Some error occured." });
@@ -94,8 +105,27 @@ const logoutUser = async (req, res) => {
 };
 
 // auth middleware
+// const authMiddleware = async (req, res, next) => {
+//   const token = req.cookies.token;
+//   // console.log(token);
+//   if (!token)
+//     return res
+//       .status(401)
+//       .json({ success: false, message: "Unauthorised user!" });
+//   try {
+//     const decode = jwt.verify(token, process.env.SECRET_KEY);
+//     req.user = decode;
+//     next();
+//   } catch (error) {
+//     return res
+//       .status(401)
+//       .json({ success: false, message: "Unauthorised user!" });
+//   }
+// };
 const authMiddleware = async (req, res, next) => {
-  const token = req.cookies.token;
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+
   // console.log(token);
   if (!token)
     return res

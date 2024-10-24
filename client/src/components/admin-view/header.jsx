@@ -3,13 +3,16 @@ import { Button } from "../ui/button";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { logoutUser } from "@/store/auth-slice";
+import { logoutUser, resetTokenAndCreadentials } from "@/store/auth-slice";
 
 export default function AdminHeader({ setOpen }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const logout = async () => {
-    const response = dispatch(logoutUser()).then((data) => console.log(data));
+    // const response = dispatch(logoutUser()).then((data) => console.log(data));
+    dispatch(resetTokenAndCreadentials());
+    sessionStorage.clear();
+    navigate("/auth/login");
   };
   return (
     <header className="flex items-center justify-between border-b bg-background px-4 py-3">

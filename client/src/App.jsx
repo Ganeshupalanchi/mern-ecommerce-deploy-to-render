@@ -37,16 +37,11 @@ function App() {
 
   const initialState = useSelector((state) => state.auth);
 
-  // if (initialState.isLoading) {
-  //   return (
-  //     <div className="flex h-full w-full items-center space-x-4">
-  //       <Skeleton className="h-12 w-12 rounded-full" />
-  //     </div>
-  //   );
-  // }
+  // console.log(initialState);
+
   useEffect(() => {
-    // checkAuth();
-    dispatch(checkAuth()).then((data) => {
+    const token = JSON.parse(sessionStorage.getItem("token"));
+    dispatch(checkAuth(token)).then((data) => {
       if (data?.payload?.success) {
         navigate(-2);
       }

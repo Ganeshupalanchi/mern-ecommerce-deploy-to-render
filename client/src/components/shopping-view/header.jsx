@@ -27,7 +27,7 @@ import {
   DropdownMenuItem,
 } from "../ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "../ui/avatar";
-import { logoutUser } from "@/store/auth-slice";
+import { logoutUser, resetTokenAndCreadentials } from "@/store/auth-slice";
 import UserCartItemsContent from "./cart-items-content";
 import UserCartWrapper from "./cart-wrapper";
 import { useEffect, useState } from "react";
@@ -99,7 +99,10 @@ function HeaderRightContent() {
   const dispatch = useDispatch();
 
   const handleLogout = () => {
-    dispatch(logoutUser());
+    dispatch(resetTokenAndCreadentials());
+    sessionStorage.clear();
+    navigate("/auth/login");
+    // dispatch(logoutUser());
   };
   useEffect(() => {
     dispatch(fetchCartItems(user?.userId));

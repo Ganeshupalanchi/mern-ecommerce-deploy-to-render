@@ -105,6 +105,7 @@ export default function Login({ isLoading }) {
         formData={formData}
         setFormData={setFormData}
         onSubmit={onSubmit}
+        isBtnDisabled={isLoading}
       />
     </div>
   );

@@ -15,10 +15,12 @@ router.post("/logout", logoutUser);
 
 router.get("/check-auth", authMiddleware, (req, res) => {
   const user = req.user;
+  // const token =
   res.status(200).json({
     success: true,
     message: "Authenticated user!",
     user,
+    // token,
   });
 });
 
