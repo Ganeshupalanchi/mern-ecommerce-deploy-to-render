@@ -4,7 +4,7 @@ import viteLogo from "/vite.svg";
 import "./App.css";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Login from "./pages/auth/Login";
-import AuthLayout from "./components/auth/layout";
+import AuthLayout from "./components/auth/Layout";
 import Register from "./pages/auth/Register";
 import AdminLayout from "./components/admin-view/Layout";
 import AdminDashboard from "./pages/admin-view/dashboard";
