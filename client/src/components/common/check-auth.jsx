@@ -13,14 +13,7 @@ export default function CheckAuth({
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  useEffect(() => {
-    // checkAuth();
-    dispatch(checkAuth()).then((data) => {
-      if (data?.payload?.success) {
-        navigate(-2);
-      }
-    });
-  }, [dispatch]);
+
   if (
     location.pathname === "/" ||
     location.pathname === "/shop" ||

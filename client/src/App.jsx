@@ -44,7 +44,14 @@ function App() {
   //     </div>
   //   );
   // }
-
+  useEffect(() => {
+    // checkAuth();
+    dispatch(checkAuth()).then((data) => {
+      if (data?.payload?.success) {
+        navigate(-2);
+      }
+    });
+  }, [dispatch]);
   return (
     <>
       <div className="flex flex-col overflow-hidden bg-white">
