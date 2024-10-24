@@ -3,7 +3,8 @@ import axios from "axios";
 
 const initialState = {
   isAuthenticated: false,
-  isLoading: true,
+  authLoading: false,
+  isLoading: false,
   user: null,
   token: null,
 };
@@ -103,17 +104,17 @@ const authSlice = createSlice({
         state.token = null;
       })
       .addCase(checkAuth.pending, (state) => {
-        state.isLoading = true;
+        state.authLoading = true;
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
         // console.log(action);
-        state.isLoading = false;
+        state.authLoading = false;
         state.user = action.payload.success ? action.payload.user : null;
         state.isAuthenticated = action.payload.success;
         // state.token = action.payload.token;
       })
       .addCase(checkAuth.rejected, (state, action) => {
-        state.isLoading = false;
+        state.authLoading = false;
         state.isAuthenticated = false;
         state.user = null;
       })

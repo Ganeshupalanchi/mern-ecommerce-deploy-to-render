@@ -4,15 +4,8 @@ import { Skeleton } from "../ui/skeleton";
 import { checkAuth } from "@/store/auth-slice";
 import { useDispatch } from "react-redux";
 
-export default function CheckAuth({
-  isAuthenticated,
-  user,
-  children,
-  isLoading,
-}) {
+export default function CheckAuth({ isAuthenticated, user, children }) {
   const location = useLocation();
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   if (
     location.pathname === "/" ||
