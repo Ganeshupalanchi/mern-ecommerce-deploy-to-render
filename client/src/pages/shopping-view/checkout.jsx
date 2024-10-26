@@ -28,7 +28,7 @@ function ShoppingCheckout() {
     .reduce((a, c) => a + c, 0);
 
   const handleInitiatePaypalPayment = () => {
-    if (!cartItems.items.length > 0) {
+    if (!cartItems?.items?.length) {
       toast({
         title: "Cart is empty.",
         variant: "destructive",
@@ -106,6 +106,7 @@ function ShoppingCheckout() {
         <Address
           setCurrentSelectedAddress={setCurrentSelectedAddress}
           currentSelectedAddress={currentSelectedAddress}
+          isAllowToSelectAddress="true"
         />
         <div className="flex flex-col gap-4">
           {cartItems?.items?.length > 0 &&

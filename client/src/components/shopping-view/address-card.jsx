@@ -11,15 +11,18 @@ export default function AddressCard({
   handleEditAddress,
   setCurrentSelectedAddress,
   currentSelectedAddress,
+  isAllowToSelectAddress = false,
 }) {
   return (
     <Card
-      className={`cursor-pointer ${
+      className={`${isAllowToSelectAddress && "cursor-pointer"} ${
         currentSelectedAddress?._id === addressInfo?._id
           ? "border-[2px] border-black"
           : ""
       }`}
-      onClick={() => setCurrentSelectedAddress(addressInfo)}
+      onClick={() =>
+        isAllowToSelectAddress && setCurrentSelectedAddress(addressInfo)
+      }
     >
       <CardContent className="grid gap-4 p-4">
         <div className="flex justify-between">

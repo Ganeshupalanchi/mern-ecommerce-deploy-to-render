@@ -19,7 +19,7 @@ function ShoppinAccount() {
           <Tabs defaultValue="orders">
             <TabsList>
               <TabsTrigger value="orders">Orders</TabsTrigger>
-              {/* <TabsTrigger value="address">Address</TabsTrigger> */}
+              <TabsTrigger value="address">Address</TabsTrigger>
             </TabsList>
             <TabsContent value="orders">
               <ShoppingOrders />

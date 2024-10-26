@@ -15,6 +15,7 @@ import { toast } from "@/hooks/use-toast";
 export default function Address({
   setCurrentSelectedAddress,
   currentSelectedAddress,
+  isAllowToSelectAddress,
 }) {
   const initialData = {
     address: "",
@@ -115,6 +116,7 @@ export default function Address({
         {addressList.length > 0 &&
           addressList.map((address, i) => (
             <AddressCard
+              isAllowToSelectAddress={isAllowToSelectAddress}
               addressInfo={address}
               key={i}
               srno={i}

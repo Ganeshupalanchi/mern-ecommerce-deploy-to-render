@@ -33,7 +33,6 @@ const getAccessToken = async () => {
 
 const createOrder = async (req, res) => {
   const accessToken = await getAccessToken();
-  // console.log(accessToken);
   // const currency = "USD";
   const {
     userId,
@@ -49,7 +48,6 @@ const createOrder = async (req, res) => {
     paymentId,
     payerId,
   } = req.body;
-  // console.log(totalAmount);
 
   try {
     const create_payment_json = {
@@ -77,8 +75,8 @@ const createOrder = async (req, res) => {
         },
       ],
       application_context: {
-        return_url: `${CLIENT_BASE_URL}/shop/paypal-return`,
-        cancel_url: `${CLIENT_BASE_URL}/shop/paypal-cancel`,
+        return_url: `${process.env.CLIENT_BASE_URL}/shop/paypal-return`,
+        cancel_url: `${process.env.CLIENT_BASE_URL}/shop/paypal-cancel`,
       },
     };
 
@@ -92,16 +90,12 @@ const createOrder = async (req, res) => {
         },
       }
     );
-    // console.log(response);
-    // console.log(response.data);
 
     const approvalURL = response.data.links.find(
       (link) => link.rel === "approve"
     ).href;
-    // console.log(approvalURL);
 
     const paypalOrderId = response.data.id;
-    // console.log(paypalOrderId);
 
     // Save order details to your database
     const newlyCreatedOrder = new Order({
@@ -129,7 +123,7 @@ const createOrder = async (req, res) => {
       orderId: newlyCreatedOrder._id,
     });
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     res.status(500).json({ success: false, message: "Some error occured." });
   }
 };
