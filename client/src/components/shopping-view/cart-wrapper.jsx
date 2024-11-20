@@ -2,8 +2,11 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
 import { SheetContent, SheetHeader, SheetTitle } from "../ui/sheet";
 import UserCartItemsContent from "./cart-items-content";
+import { useSelector } from "react-redux";
 
-export default function UserCartWrapper({ cartItems, setOpenCartSheet }) {
+export default function UserCartWrapper({ setOpenCartSheet }) {
+  const { cartItems } = useSelector((state) => state.shopCart);
+
   const navigate = useNavigate();
   const total = cartItems?.items
     ?.map((item) => {

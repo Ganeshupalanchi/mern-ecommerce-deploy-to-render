@@ -17,7 +17,7 @@ export default function ProductImageUpload({
   editIdImage,
   isCustomStyling = false,
 }) {
-  console.log();
+  // console.log();
 
   const inputRef = useRef(null);
 

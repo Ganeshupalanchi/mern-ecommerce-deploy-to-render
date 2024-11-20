@@ -34,7 +34,10 @@ import { useEffect, useState } from "react";
 import { fetchCartItems } from "@/store/shop/cart-slice";
 import { Label } from "../ui/label";
 
-function MenuItems() {
+function MenuItems({ setIsSheetOpen }) {
+  const handleClick = () => {
+    if (setIsSheetOpen) setIsSheetOpen(false); // Check if setIsSheetOpen is defined before calling it
+  };
   const navigate = useNavigate();
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -74,11 +77,14 @@ function MenuItems() {
   }, []);
 
   return (
-    <nav className="mb-3 flex flex-col gap-6 lg:mb-0 lg:flex-row lg:items-center">
+    <nav className="mb-6 flex flex-col gap-6 lg:mb-0 lg:flex-row lg:items-center">
       {shoppingViewHeaderMenuItems.map((menuItem) => (
         <Label
           key={menuItem.id}
-          onClick={() => handleNavigate(menuItem)}
+          onClick={() => {
+            handleClick();
+            handleNavigate(menuItem);
+          }}
           className="cursor-pointer text-sm font-medium"
         >
           {menuItem.label}
@@ -92,7 +98,6 @@ function HeaderRightContent() {
   const { user } = useSelector((state) => state.auth);
 
   const { cartItems } = useSelector((state) => state.shopCart);
-  // console.log(cartItems);
 
   const [openCartSheet, setOpenCartSheet] = useState(false);
   const navigate = useNavigate();
@@ -122,21 +127,10 @@ function HeaderRightContent() {
           </span>
           <span className="sr-only">User Cart</span>
         </Button>
-        <UserCartWrapper
-          setOpenCartSheet={setOpenCartSheet}
-          cartItems={cartItems}
-        />
+        <UserCartWrapper setOpenCartSheet={setOpenCartSheet} />
       </Sheet>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          {/* <div className="rounded-full bg-black p-2">
-            <div className="bg-black font-extrabold text-white">
-              {user?.userName
-                .split(" ")
-                .map((username) => username[0].toUpperCase())
-                .join("")}
-            </div>
-          </div> */}
+        <DropdownMenuTrigger asChild className="hidden lg:block">
           <Avatar className="bg-black">
             <AvatarFallback className="bg-black font-extrabold text-white">
               {user?.userName
@@ -172,7 +166,15 @@ function HeaderRightContent() {
 
 function ShoppingHeader() {
   const { isAuthenticated, user } = useSelector((state) => state.auth);
-
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(resetTokenAndCreadentials());
+    sessionStorage.clear();
+    navigate("/auth/login");
+    // dispatch(logoutUser());
+  };
   return (
     <>
       <header className="fixed top-0 z-50 w-full border-b bg-background">
@@ -181,19 +183,56 @@ function ShoppingHeader() {
             <HousePlug className="h-6 w-6" />
             <span className="font-bold">Ecommerce</span>
           </Link>
-          <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="outline" size="icon" className="lg:hidden">
+          <div className="flex gap-2 lg:hidden">
+            <HeaderRightContent />
+            <Sheet
+              open={isSheetOpen}
+              onOpenChange={() => setIsSheetOpen(false)}
+            >
+              {/* <HeaderRightContent /> */}
+              {/* <SheetTrigger asChild> */}
+
+              <Button
+                variant="outline"
+                size="icon"
+                className="lg:hidden"
+                onClick={() => setIsSheetOpen(true)}
+              >
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Toggle header menu</span>
               </Button>
-            </SheetTrigger>
+              {/* </SheetTrigger> */}
 
-            <SheetContent className="w-full max-w-xs" side="left">
-              <MenuItems />
-              <HeaderRightContent />
-            </SheetContent>
-          </Sheet>
+              <SheetContent
+                className="h-100vh flex w-full max-w-xs flex-col justify-between overflow-auto"
+                side="left"
+              >
+                <MenuItems setIsSheetOpen={setIsSheetOpen} />
+                <div className="flex flex-col gap-6">
+                  <Label
+                    className="flex cursor-pointer text-sm font-medium"
+                    onClick={() => {
+                      setIsSheetOpen(false);
+                      navigate("/shop/account");
+                    }}
+                  >
+                    <UserRoundCog className="mr-2 h-4 w-4" />
+                    My Account
+                  </Label>
+                  <Label
+                    className="flex cursor-pointer text-sm font-medium"
+                    onClick={() => {
+                      setIsSheetOpen(false);
+                      handleLogout();
+                    }}
+                  >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Logout
+                  </Label>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
 
           <div className="hidden lg:block">
             <MenuItems />

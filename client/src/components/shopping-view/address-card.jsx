@@ -49,6 +49,7 @@ export default function AddressCard({
           Edit
         </Button>
         <Button
+          className="bg-red-500 hover:bg-red-600"
           onClick={(e) => {
             e.stopPropagation();
             handleDeleteAddress(addressInfo);

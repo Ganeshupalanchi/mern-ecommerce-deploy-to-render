@@ -16,7 +16,10 @@ export default function AdminHeader({ setOpen }) {
   };
   return (
     <header className="flex items-center justify-between border-b bg-background px-4 py-3">
-      <Button onClick={() => setOpen(true)} className="sm:block lg:hidden">
+      <Button
+        onClick={() => setOpen(true)}
+        className="text-2xl sm:block lg:hidden"
+      >
         <AlignJustify />
         <span className="sr-only">Toggle Menu</span>
       </Button>

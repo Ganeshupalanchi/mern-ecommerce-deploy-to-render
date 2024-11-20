@@ -91,6 +91,7 @@ function ShoppingCheckout() {
   useEffect(() => {
     if (approvalURL) {
       window.location.href = approvalURL;
+      console.log(approvalURL);
     }
   }, [approvalURL]);
   return (

@@ -3,6 +3,7 @@ const Cart = require("../../models/Cart");
 const axios = require("axios");
 const qs = require("qs"); // For form URL encoding
 const Product = require("../../models/Product");
+require("dotenv").config();
 
 const getAccessToken = async () => {
   const clientId =
@@ -34,6 +35,8 @@ const getAccessToken = async () => {
 const createOrder = async (req, res) => {
   const accessToken = await getAccessToken();
   // const currency = "USD";
+  // console.log(accessToken);
+
   const {
     userId,
     cartId,
@@ -131,6 +134,8 @@ const createOrder = async (req, res) => {
 const capturePayment = async (req, res) => {
   //   const accessToken = await getAccessToken();
   const accessToken = await getAccessToken();
+  // console.log(accessToken);
+  // return;
 
   const { token, payerId } = req.body; // PayPal order ID (token)
   // console.log(token, payerId);

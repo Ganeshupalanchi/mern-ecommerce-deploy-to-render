@@ -55,7 +55,7 @@ export default function AdminProducts() {
         });
       });
     } else {
-      console.log("Add");
+      // console.log("Add");
       formData.image = uploadedImageUrl;
       dispatch(addNewProduct(formData)).then((data) => {
         // console.log(data);

@@ -165,6 +165,7 @@ const getUserByID = async (req, res) => {
     });
   } catch (error) {}
 };
+
 module.exports = {
   registerUser,
   loginUser,

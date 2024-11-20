@@ -12,7 +12,7 @@ export default function CheckAuth({ isAuthenticated, user, children }) {
     location.pathname === "/shop" ||
     location.pathname === "/admin"
   ) {
-    console.log("hiiii");
+    // console.log("hiiii");
     if (!isAuthenticated) {
       return <Navigate to={"/auth/login"} />;
     } else {

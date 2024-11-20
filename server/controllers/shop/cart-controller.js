@@ -53,7 +53,7 @@ const fetchCartItems = async (req, res) => {
 
     const cart = await Cart.findOne({ userId }).populate({
       path: "items.productId",
-      select: "image title price salePrice",
+      select: "image title price salePrice totalStock",
     });
     // console.log(cart);
 
@@ -78,16 +78,15 @@ const fetchCartItems = async (req, res) => {
       title: item.productId.title,
       price: item.productId.price,
       salePrice: item.productId.salePrice,
+      totalStock: item.productId.totalStock,
       quantity: item.quantity,
     }));
 
     res.status(200).json({
       success: true,
       data: {
-        data: {
-          ...cart._doc,
-          items: populateCartItems,
-        },
+        ...cart._doc,
+        items: populateCartItems,
       },
     });
   } catch (error) {
@@ -146,10 +145,8 @@ const updateCartItemsQty = async (req, res) => {
     res.status(200).json({
       success: true,
       data: {
-        data: {
-          ...cart._doc,
-          items: populateCartItems,
-        },
+        ...cart._doc,
+        items: populateCartItems,
       },
     });
   } catch (error) {
@@ -171,7 +168,7 @@ const deleteCartItem = async (req, res) => {
 
     const cart = await Cart.findOne({ userId }).populate({
       path: "items.productId",
-      select: "image title price salePrice",
+      select: "image title price salePrice totalStock",
     });
     if (!cart) {
       return res
@@ -195,16 +192,15 @@ const deleteCartItem = async (req, res) => {
       title: item.productId && item.productId.title,
       price: item.productId && item.productId.price,
       salePrice: item.productId && item.productId.salePrice,
+      totalStock: item.productId.totalStock,
       quantity: item.quantity,
     }));
 
     res.status(200).json({
       success: true,
       data: {
-        data: {
-          ...cart._doc,
-          items: populateCartItems,
-        },
+        ...cart._doc,
+        items: populateCartItems,
       },
     });
   } catch (error) {

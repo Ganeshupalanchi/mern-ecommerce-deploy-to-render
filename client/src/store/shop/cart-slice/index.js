@@ -19,7 +19,7 @@ export const fetchCartItems = createAsyncThunk(
     const response = await axios.get(
       `${import.meta.env.VITE_API_URL}/api/shop/cart/get/${userId}`,
     );
-    return response.data.data;
+    return response.data;
   },
 );
 
@@ -29,7 +29,7 @@ export const deleteCartItem = createAsyncThunk(
     const response = await axios.delete(
       `${import.meta.env.VITE_API_URL}/api/shop/cart/delete/${userId}/${productId}`,
     );
-    return response.data.data;
+    return response.data;
   },
 );
 
@@ -40,7 +40,7 @@ export const updateCartQty = createAsyncThunk(
       `${import.meta.env.VITE_API_URL}/api/shop/cart/update-cart`,
       { userId, productId, quantity },
     );
-    return response.data.data;
+    return response.data;
   },
 );
 const initialState = {
@@ -72,28 +72,6 @@ const shoppingCartSlice = createSlice({
         state.cartItems = action.payload.data;
       })
       .addCase(fetchCartItems.rejected, (state, action) => {
-        state.isLoading = false;
-        state.cartItems = [];
-      })
-      .addCase(updateCartQty.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(updateCartQty.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.cartItems = action.payload.data;
-      })
-      .addCase(updateCartQty.rejected, (state, action) => {
-        state.isLoading = false;
-        state.cartItems = [];
-      })
-      .addCase(deleteCartItem.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(deleteCartItem.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.cartItems = action.payload.data;
-      })
-      .addCase(deleteCartItem.rejected, (state, action) => {
         state.isLoading = false;
         state.cartItems = [];
       });
